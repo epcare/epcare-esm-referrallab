@@ -10,6 +10,10 @@ export interface Result {
   instructions?: string;
   careSetting: CareSetting;
   encounter: Encounter;
+  specimenSource?: {
+    uuid: string;
+    display: string;
+  };
   fulfillerComment?: string;
   orderType: OrderType;
   concept: Concept;
@@ -119,7 +123,7 @@ export function useGetOrdersWorklist(fulfillerStatus: string, dateTo?: string) {
 // get new refered orders
 export function useGetNewReferredOrders(status: string, dateTo?: string) {
   const customRepresentation =
-    'v=custom:(order:(uuid,orderNumber,accessionNumber,instructions,careSetting:(uuid),encounter:(uuid,obs:(order:(uuid,display,patient:(uuid,display)))),fulfillerComment,orderType:(display),concept:(display,uuid),action,dateStopped,fulfillerStatus,dateActivated,orderer:(uuid,display),urgency,patient:(uuid,names:(display),display,gender,birthdate,identifiers:(voided,preferred,uuid,display,identifierType:(uuid)))),syncTask)';
+    'v=custom:(order:(uuid,orderNumber,accessionNumber,instructions,specimenSource:(uuid,display),careSetting:(uuid),encounter:(uuid,obs:(order:(uuid,display,patient:(uuid,display)))),fulfillerComment,orderType:(display),concept:(display,uuid),action,dateStopped,fulfillerStatus,dateActivated,orderer:(uuid,display),urgency,patient:(uuid,names:(display),display,gender,birthdate,identifiers:(voided,preferred,uuid,display,identifierType:(uuid)))),syncTask)';
   let apiUrl = `${restBaseUrl}/referredorders?fulfillerStatus=${status}&${customRepresentation}`;
   if (dateTo) {
     apiUrl += `&activatedOnOrAfterDate=${dateTo}`;

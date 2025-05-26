@@ -215,6 +215,20 @@ const AddToWorklistDialog: React.FC<AddToWorklistDialogProps> = ({ closeWorkspac
     }
   }, [isEdit, order, setValue]);
 
+  useEffect(() => {
+    if (isEdit && order?.specimenSource?.uuid) {
+      const matchedSpecimen = specimenTypes.find(
+        (item) => item.uuid === order.specimenSource.uuid
+      );
+  
+      if (matchedSpecimen) {
+        setValue('specimenSourceId', matchedSpecimen.uuid); 
+        setSpecimenType(matchedSpecimen.uuid);
+      }
+    }
+  }, [isEdit, order?.specimenSource?.uuid, specimenTypes, setValue]);
+  
+
   return (
     <div className={styles.container}>
       <div className={styles.body}>
