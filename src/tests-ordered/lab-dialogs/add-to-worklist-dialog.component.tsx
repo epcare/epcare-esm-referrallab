@@ -76,6 +76,7 @@ const AddToWorklistDialog: React.FC<AddToWorklistDialogProps> = ({ closeWorkspac
   const {
     handleSubmit,
     control,
+    setValue,
     formState: { errors },
   } = useForm<GenerateSpecimenIdSchema>({
     mode: 'all',
@@ -141,6 +142,7 @@ const AddToWorklistDialog: React.FC<AddToWorklistDialogProps> = ({ closeWorkspac
   useEffect(() => {
     if (barcode !== '' && confirmBarcode !== '' && barcode === confirmBarcode) {
       setSpecimenID(barcode || confirmBarcode || specimenID);
+      setValue("specimenId", barcode || confirmBarcode || specimenID);
     }
   }, [barcode, confirmBarcode]);
 
@@ -258,7 +260,7 @@ const AddToWorklistDialog: React.FC<AddToWorklistDialogProps> = ({ closeWorkspac
                           <SelectItem text={t('selectAReferralPoint', 'Select a referral point')} value="" />
                         )}
                         {referrals.map((referral) => (
-                          <SelectItem key={referral.uuid} text={referral.display} value={referral.uuid} />
+                          <SelectItem key={referral.uuid} text={referral.display} value={referral.display} />
                         ))}
                       </Select>
                     )}

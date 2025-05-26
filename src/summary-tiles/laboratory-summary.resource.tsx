@@ -42,9 +42,7 @@ export function useLabTestsStats(fulfillerStatus: string, date?: string) {
     apiUrl += `&activatedOnOrAfterDate=${date}`;
   }
 
-  const { data, error, isLoading, mutate } = useSWR<{ data: { results: Array<Result> } }, Error>(apiUrl, openmrsFetch, {
-    refreshInterval: 3000,
-  });
+  const { data, error, isLoading, mutate } = useSWR<{ data: { results: Array<Result> } }, Error>(apiUrl, openmrsFetch);
   return {
     data: data?.data ? data?.data?.results : [],
     isLoading,
