@@ -196,7 +196,7 @@ const AddToWorklistDialog: React.FC<AddToWorklistDialogProps> = ({ closeWorkspac
       setSpecimenID(barcode || confirmBarcode || specimenID);
       setValue('specimenId', barcode || confirmBarcode || specimenID);
     }
-  }, [barcode, confirmBarcode]);
+  }, [barcode, confirmBarcode, setValue, setSpecimenID, specimenID]);
 
   useEffect(() => {
     if (isEdit) {
@@ -204,9 +204,7 @@ const AddToWorklistDialog: React.FC<AddToWorklistDialogProps> = ({ closeWorkspac
       setValue('referred', initial);
       setPreferred(initial);
     }
-  }, [isEdit, setValue]);
-
-  console.log('Order:');
+  }, [isEdit, setValue, setPreferred]);
 
   useEffect(() => {
     if (isEdit && order?.accessionNumber) {
