@@ -22,7 +22,14 @@ import {
 } from '@carbon/react';
 import { Result, useGetOrdersWorklist } from './work-list.resource';
 import styles from './work-list.scss';
-import { ConfigurableLink, formatDate, parseDate, showModal, usePagination } from '@openmrs/esm-framework';
+import {
+  ConfigurableLink,
+  formatDate,
+  launchWorkspace,
+  parseDate,
+  showModal,
+  usePagination,
+} from '@openmrs/esm-framework';
 import { launchOverlay } from '../components/overlay/hook';
 import ResultForm from '../results/result-form.component';
 import { getStatusColor, useOrderDate } from '../utils/functions';
@@ -78,7 +85,13 @@ const WorkList: React.FC<WorklistProps> = ({ fulfillerStatus }) => {
   };
 
   const EditOrder: React.FC<EditOrderProps> = ({ order }) => {
-    return <Button kind="ghost" renderIcon={() => <Edit size="16" />}></Button>;
+    const handleLaunchWorkspace = useCallback(() => {
+      launchWorkspace('pick-order-form-workspace', {
+        order,
+        isEdit: true,
+      });
+    }, [order]);
+    return <Button kind="ghost" renderIcon={() => <Edit size="16" />} onClick={handleLaunchWorkspace}></Button>;
   };
 
   // get picked orders

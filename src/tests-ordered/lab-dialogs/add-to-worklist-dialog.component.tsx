@@ -22,7 +22,7 @@ type AddToWorklistDialogProps = DefaultWorkspaceProps & {
   isEdit?: boolean;
 };
 
-const AddToWorklistDialog: React.FC<AddToWorklistDialogProps> = ({ closeWorkspace, order ,isEdit}) => {
+const AddToWorklistDialog: React.FC<AddToWorklistDialogProps> = ({ closeWorkspace, order, isEdit }) => {
   const { t } = useTranslation();
   const config = useConfig();
   const { specimenTypes } = useSpecimenTypes();
@@ -40,36 +40,86 @@ const AddToWorklistDialog: React.FC<AddToWorklistDialogProps> = ({ closeWorkspac
     .object({
       specimenId: z.string().min(1, { message: t('specimenIdRequired', 'Specimen ID is required') }),
       specimenSourceId: z.string().min(1, { message: t('specimenTypeRequired', 'Specimen Type is required') }),
-      barcode: z
-        .string()
-        .min(2, { message: t('barcodeMinLength', 'Barcode must be at least 2 characters') })
-        .max(10, { message: t('barcodeMaxLength', 'Barcode must be at most 10 characters') })
-        .regex(/^[a-zA-Z0-9]+$/, {
-          message: t('barcodeAlphanumeric', 'Barcode must only contain letters and numbers'),
-        })
-        .refine((val) => !/\s/.test(val), {
-          message: t('barcodeNoSpaces', 'Barcode must not contain spaces'),
-        })
-        .refine(
-          (val) => {
-            const prefix = val.slice(0, 2);
-            const num = parseInt(prefix, 10);
-            return !isNaN(num) && num >= 24;
-          },
-          {
-            message: t('barcodePrefixInvalid', 'Barcode must start with a number 24 or greater'),
-          },
-        ),
-      confirmBarcode: z.string().min(1, { message: t('confirmBarcodeRequired', 'Confirm Barcode is required') }),
+      barcode: z.string().optional(),
+      confirmBarcode: z.string().optional(),
       unProcessedOrders: z.string().optional(),
       patientQueueId: z.string().optional(),
       referenceLab: z.string().optional(),
       referred: z.boolean().optional(),
       externalReferralName: z.string().optional(),
     })
-    .refine((data) => data.barcode === data.confirmBarcode, {
-      message: t('barcodeMismatch', 'Barcode and Confirm Barcode must match'),
-      path: ['confirmBarcode'],
+    .superRefine((data, ctx) => {
+      const referred = data.referred ?? false;
+
+      // If  referred, barcode and confirmBarcode are required
+      if (referred) {
+        if (!data.barcode || data.barcode.trim() === '') {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ['barcode'],
+            message: t('barcodeRequired', 'Barcode is required'),
+          });
+        } else {
+          // Barcode validation rules
+          if (data.barcode.length < 2) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              path: ['barcode'],
+              message: t('barcodeMinLength', 'Barcode must be at least 2 characters'),
+            });
+          }
+
+          if (data.barcode.length > 10) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              path: ['barcode'],
+              message: t('barcodeMaxLength', 'Barcode must be at most 10 characters'),
+            });
+          }
+
+          if (!/^[a-zA-Z0-9]+$/.test(data.barcode)) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              path: ['barcode'],
+              message: t('barcodeAlphanumeric', 'Barcode must only contain letters and numbers'),
+            });
+          }
+
+          if (/\s/.test(data.barcode)) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              path: ['barcode'],
+              message: t('barcodeNoSpaces', 'Barcode must not contain spaces'),
+            });
+          }
+
+          const prefix = data.barcode.slice(0, 2);
+          const num = parseInt(prefix, 10);
+          if (isNaN(num) || num < 24) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              path: ['barcode'],
+              message: t('barcodePrefixInvalid', 'Barcode must start with a number 24 or greater'),
+            });
+          }
+        }
+
+        if (!data.confirmBarcode || data.confirmBarcode.trim() === '') {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ['confirmBarcode'],
+            message: t('confirmBarcodeRequired', 'Confirm Barcode is required'),
+          });
+        }
+
+        if (data.barcode && data.confirmBarcode && data.barcode !== data.confirmBarcode) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ['confirmBarcode'],
+            message: t('barcodeMismatch', 'Barcode and Confirm Barcode must match'),
+          });
+        }
+      }
     });
 
   type GenerateSpecimenIdSchema = z.infer<typeof generateSpecimenIdSchema>;
@@ -116,6 +166,7 @@ const AddToWorklistDialog: React.FC<AddToWorklistDialogProps> = ({ closeWorkspac
       });
     } finally {
       handleMutate(`${restBaseUrl}/order`);
+      handleMutate(`${restBaseUrl}/referredorders`);
     }
   };
 
@@ -150,7 +201,7 @@ const AddToWorklistDialog: React.FC<AddToWorklistDialogProps> = ({ closeWorkspac
   useEffect(() => {
     if (isEdit) {
       const initial = true;
-      setValue("referred", initial);
+      setValue('referred', initial);
       setPreferred(initial);
     }
   }, [isEdit, setValue]);
