@@ -142,7 +142,7 @@ const AddToWorklistDialog: React.FC<AddToWorklistDialogProps> = ({ closeWorkspac
   useEffect(() => {
     if (barcode !== '' && confirmBarcode !== '' && barcode === confirmBarcode) {
       setSpecimenID(barcode || confirmBarcode || specimenID);
-      setValue("specimenId", barcode || confirmBarcode || specimenID);
+      setValue('specimenId', barcode || confirmBarcode || specimenID);
     }
   }, [barcode, confirmBarcode]);
 
