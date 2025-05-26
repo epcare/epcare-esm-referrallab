@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Select, SelectItem, Checkbox, TextInput, ButtonSet, FormGroup } from '@carbon/react';
+import { Button, Select, SelectItem, Checkbox, TextInput, ButtonSet, FormGroup, InlineLoading } from '@carbon/react';
 import { useTranslation } from 'react-i18next';
 import styles from './add-to-worklist-dialog.scss';
 import { DefaultWorkspaceProps, restBaseUrl, showNotification, showSnackbar, useConfig } from '@openmrs/esm-framework';
@@ -35,6 +35,7 @@ const AddToWorklistDialog: React.FC<AddToWorklistDialogProps> = ({ closeWorkspac
   const [selectedReferral, setSelectedReferral] = useState('');
   const [confirmBarcode, setConfirmBarcode] = useState('');
   const [externalReferralName, setExternalReferralName] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const generateSpecimenIdSchema = z
     .object({
@@ -146,18 +147,23 @@ const AddToWorklistDialog: React.FC<AddToWorklistDialogProps> = ({ closeWorkspac
       patientQueueId: '',
       referenceLab: preferred ? extractLetters(selectedReferral) : '',
     };
-
+  
+    setIsLoading(true);
+  
     try {
       await UpdateOrder(order.uuid, body);
+  
       showSnackbar({
         isLowContrast: true,
         title: t('pickedAnOrder', 'Picked an order'),
         kind: 'success',
         subtitle: t('pickSuccessfully', 'You have successfully picked an Order'),
       });
+  
       closeWorkspace();
     } catch (error) {
       const errorMessages = extractErrorMessagesFromResponse(error);
+      
       showNotification({
         title: t('errorPickingOrder', 'Error Picking an Order'),
         kind: 'error',
@@ -165,6 +171,7 @@ const AddToWorklistDialog: React.FC<AddToWorklistDialogProps> = ({ closeWorkspac
         description: errorMessages.join(', '),
       });
     } finally {
+      setIsLoading(false);
       handleMutate(`${restBaseUrl}/order`);
       handleMutate(`${restBaseUrl}/referredorders`);
     }
@@ -435,9 +442,14 @@ const AddToWorklistDialog: React.FC<AddToWorklistDialogProps> = ({ closeWorkspac
         <Button kind="secondary" onClick={closeWorkspace} className={styles.button}>
           {t('cancel', 'Cancel')}
         </Button>
-        <Button type="submit" onClick={handleSubmit(handleSave)} className={styles.button}>
-          {t('pickPatient', 'Pick Lab Request')}
-        </Button>
+
+        {isLoading ? (
+          <InlineLoading iconDescription="Loading" description={t('loading', 'Loading...')} status="active" />
+        ) : (
+          <Button type="submit" onClick={handleSubmit(handleSave)} className={styles.button}>
+            {t('pickPatient', 'Pick Lab Request')}
+          </Button>
+        )}
       </ButtonSet>
     </div>
   );
