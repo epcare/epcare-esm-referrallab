@@ -91,6 +91,7 @@ const ReferredOrdersList: React.FC = () => {
     const handleLaunchWorkspace = useCallback(() => {
       launchWorkspace('pick-order-form-workspace', {
         order,
+        isEdit: true,
       });
     }, [order]);
     return <Button kind="ghost" renderIcon={() => <Edit size="16" />} onClick={handleLaunchWorkspace}></Button>;
@@ -288,7 +289,7 @@ const ReferredOrdersList: React.FC = () => {
       ),
       orderer: entry?.order?.orderer?.display,
       orderType: entry?.order?.orderType?.display,
-      actions: <EditOrder order={paginatedReferredOrderEntries[index]} />,
+      actions: <EditOrder order={paginatedReferredOrderEntries[index]?.order} />,
       message: paginatedReferredOrderEntries[index]?.syncTask?.status,
     }));
   }, [paginatedReferredOrderEntries]);

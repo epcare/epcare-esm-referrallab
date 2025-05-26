@@ -11,17 +11,18 @@ import {
   useReferralLocations,
   useSpecimenTypes,
 } from './add-to-worklist-dialog.resource';
-import { Order } from '../../types/patient-queues';
 import { extractErrorMessagesFromResponse, handleMutate } from '../../utils/functions';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
+import { Result } from '../../work-list/work-list.resource';
 
 type AddToWorklistDialogProps = DefaultWorkspaceProps & {
-  order: Order;
+  order?: Result;
+  isEdit?: boolean;
 };
 
-const AddToWorklistDialog: React.FC<AddToWorklistDialogProps> = ({ closeWorkspace, order }) => {
+const AddToWorklistDialog: React.FC<AddToWorklistDialogProps> = ({ closeWorkspace, order ,isEdit}) => {
   const { t } = useTranslation();
   const config = useConfig();
   const { specimenTypes } = useSpecimenTypes();
@@ -145,6 +146,25 @@ const AddToWorklistDialog: React.FC<AddToWorklistDialogProps> = ({ closeWorkspac
       setValue('specimenId', barcode || confirmBarcode || specimenID);
     }
   }, [barcode, confirmBarcode]);
+
+  useEffect(() => {
+    if (isEdit) {
+      const initial = true;
+      setValue("referred", initial);
+      setPreferred(initial);
+    }
+  }, [isEdit, setValue]);
+
+  console.log('Order:');
+
+  useEffect(() => {
+    if (isEdit && order?.accessionNumber) {
+      setValue('barcode', order?.accessionNumber);
+      setValue('confirmBarcode', order?.accessionNumber);
+      setBarcode(order?.accessionNumber);
+      setConfirmBarcode(order?.accessionNumber);
+    }
+  }, [isEdit, order, setValue]);
 
   return (
     <div className={styles.container}>
@@ -305,7 +325,6 @@ const AddToWorklistDialog: React.FC<AddToWorklistDialogProps> = ({ closeWorkspac
                           labelText="Enter Barcode"
                           invalid={!!fieldState.error}
                           invalidText={fieldState.error?.message}
-                          value={barcode}
                           onChange={(e) => {
                             field.onChange(e);
                             setBarcode(e.target.value);
@@ -334,7 +353,6 @@ const AddToWorklistDialog: React.FC<AddToWorklistDialogProps> = ({ closeWorkspac
                           labelText="Confirm Barcode"
                           invalid={!!fieldState.error}
                           invalidText={fieldState.error?.message}
-                          value={confirmBarcode}
                           onChange={(e) => {
                             field.onChange(e);
                             setConfirmBarcode(e.target.value);
