@@ -37,6 +37,13 @@ const AddToWorklistDialog: React.FC<AddToWorklistDialogProps> = ({ closeWorkspac
   const [externalReferralName, setExternalReferralName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  const acronymMap: Record<string, string> = {
+    CPHL: 'Central Public Health Laboratory',
+    UVRI: 'Uganda Virus Research Institute',
+    HUB: 'HUB',
+    OTHER: 'Other Reference lab',
+  };
+
   const generateSpecimenIdSchema = z
     .object({
       specimenId: z.string().min(1, { message: t('specimenIdRequired', 'Specimen ID is required') }),
@@ -235,6 +242,26 @@ const AddToWorklistDialog: React.FC<AddToWorklistDialogProps> = ({ closeWorkspac
       }
     }
   }, [isEdit, order?.specimenSource?.uuid, specimenTypes, setValue]);
+
+  useEffect(() => {
+    if (!isEdit || !order?.instructions) return;
+
+    const lastWord = order.instructions.trim().split(/\s+/).pop();
+
+    const mappedDisplay = acronymMap[lastWord ?? ''];
+
+    if (mappedDisplay) {
+      const matchedReferral = referrals.find((item) => item.display === mappedDisplay);
+
+      if (matchedReferral) {
+        setSelectedReferral(matchedReferral.display);
+        setValue('referenceLab', matchedReferral.display);
+      } else {
+        setSelectedReferral('');
+        setValue('referenceLab', '');
+      }
+    }
+  }, [isEdit, order, referrals, setValue]);
 
   return (
     <div className={styles.container}>
