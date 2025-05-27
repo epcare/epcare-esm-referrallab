@@ -3,11 +3,12 @@ import styles from './result-form.scss';
 import { Button, InlineLoading, ModalBody, ModalFooter } from '@carbon/react';
 import { useTranslation } from 'react-i18next';
 import { closeOverlay } from '../components/overlay/hook';
-import { ExtensionSlot, showNotification, showSnackbar, usePatient } from '@openmrs/esm-framework';
+import { ExtensionSlot, restBaseUrl, showNotification, showSnackbar, usePatient } from '@openmrs/esm-framework';
 import { useGetOrderConceptByUuid, UpdateOrderResult } from './result-form.resource';
 import { Result } from '../work-list/work-list.resource';
 import ResultFormField from './result-form-field.component';
 import { useForm } from 'react-hook-form';
+import { handleMutate } from '../utils/functions';
 
 interface ResultFormProps {
   patientUuid: string;
@@ -117,6 +118,8 @@ const ResultForm: React.FC<ResultFormProps> = ({ order, patientUuid }) => {
           subtitle: t('generateSuccessfully', 'You have successfully updated test results'),
         });
         closeOverlay();
+        handleMutate(`${restBaseUrl}/order`);
+        handleMutate(`${restBaseUrl}/referredorders`);
       },
       (err) => {
         showNotification({

@@ -91,7 +91,9 @@ const WorkList: React.FC<WorklistProps> = ({ fulfillerStatus }) => {
         isEdit: true,
       });
     }, [order]);
-    return <Button kind="ghost" renderIcon={() => <Edit size="16" />} onClick={handleLaunchWorkspace}></Button>;
+    return (
+      <Button kind="ghost" renderIcon={(props) => <Edit size={16} {...props} />} onClick={handleLaunchWorkspace} />
+    );
   };
 
   // get picked orders

@@ -147,23 +147,23 @@ const AddToWorklistDialog: React.FC<AddToWorklistDialogProps> = ({ closeWorkspac
       patientQueueId: '',
       referenceLab: preferred ? extractLetters(selectedReferral) : '',
     };
-  
+
     setIsLoading(true);
-  
+
     try {
       await UpdateOrder(order.uuid, body);
-  
+
       showSnackbar({
         isLowContrast: true,
         title: t('pickedAnOrder', 'Picked an order'),
         kind: 'success',
         subtitle: t('pickSuccessfully', 'You have successfully picked an Order'),
       });
-  
+
       closeWorkspace();
     } catch (error) {
       const errorMessages = extractErrorMessagesFromResponse(error);
-      
+
       showNotification({
         title: t('errorPickingOrder', 'Error Picking an Order'),
         kind: 'error',
@@ -207,11 +207,14 @@ const AddToWorklistDialog: React.FC<AddToWorklistDialogProps> = ({ closeWorkspac
 
   useEffect(() => {
     if (isEdit) {
-      const initial = true;
-      setValue('referred', initial);
-      setPreferred(initial);
+      const isReferred = order?.instructions === 'REFER TO CPHL';
+      setValue('referred', isReferred);
+      setPreferred(isReferred);
+    } else {
+      setValue('referred', false);
+      setPreferred(false);
     }
-  }, [isEdit, setValue, setPreferred]);
+  }, [isEdit, order?.instructions, setValue, setPreferred]);
 
   useEffect(() => {
     if (isEdit && order?.accessionNumber) {

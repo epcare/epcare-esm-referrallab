@@ -94,7 +94,7 @@ const ReferredOrdersList: React.FC = () => {
         isEdit: true,
       });
     }, [order]);
-    return <Button kind="ghost" renderIcon={() => <Edit size="16" />} onClick={handleLaunchWorkspace}></Button>;
+    return <Button kind="ghost" renderIcon={(props) => <Edit size={16} {...props} />} onClick={handleLaunchWorkspace}/>;
   };
 
   const handleSyncSelectedTestOrders = async (selectedRows: any[]) => {
