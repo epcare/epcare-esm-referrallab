@@ -1,4 +1,4 @@
-name: UgandaEMR CI
+name: ePCare CI
 
 on:
   push:
@@ -10,8 +10,8 @@ on:
       - created
 
 env:
-  ESM_NAME: "@ugandaemr/esm-laboratory-app"
-  JS_NAME: "ugandaemr-esm-laboratory-app.js"
+  ESM_NAME: "@epcare/esm-referal-laboratory-app"
+  JS_NAME: "@epcare/esm-referal-laboratory-app.js"
 
 jobs:
   build:
@@ -97,7 +97,7 @@ jobs:
       - name: Build
         run: yarn turbo run build --color --concurrency=5
 
-      - run: git config user.email "<>" && git config user.name "UgandaEMR CI"
+      - run: git config user.email "<>" && git config user.name "ePCare CI"
       - run: git add . && git commit -m "Prerelease version" --no-verify
 
       - name: Pre-release

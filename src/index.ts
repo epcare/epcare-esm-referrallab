@@ -24,10 +24,10 @@ import rejectedTile from './lab-tiles/rejected-tile.component';
 import { createDashboardLink, registerWorkspace } from '@openmrs/esm-patient-common-lib';
 import rejectedTabComponent from './lab-tabs/rejected-tab.component';
 
-const moduleName = '@ugandaemr/esm-laboratory-app';
+const moduleName = '@epcare/esm-referal-laboratory-app';
 
 const options = {
-  featureName: 'ugandaemr-esm-laboratory',
+  featureName: 'esm-referal-laboratory-app',
   moduleName,
 };
 
