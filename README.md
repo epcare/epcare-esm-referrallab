@@ -1,6 +1,6 @@
 # Laboratory ESM
 
-A frontend module for managing laboratory requests
+A frontend module for managing referral of laboratory requests
 
 For more information, please refer to the
 [OpenMRS 3.x Frontend Documentation](https://o3-docs.openmrs.org/).
@@ -24,7 +24,7 @@ Implementers can add or remove summary tiles via extension configuration in the 
 
 ```sh
 # Clone the repository
-git clone git@github.com:openmrs/openmrs-esm-laboratory.git
+git clone git@github.com:epcare/epcare-esm-referrallab.git
 
 # to install dependencies
 yarn
