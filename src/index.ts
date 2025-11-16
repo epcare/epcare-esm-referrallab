@@ -21,13 +21,13 @@ import completedTile from './lab-tiles/completed-tile.component';
 import testsOrdered from './lab-tiles/tests-ordered-tile.component';
 import rejectedTile from './lab-tiles/rejected-tile.component';
 
-import { createDashboardLink, registerWorkspace } from '@openmrs/esm-patient-common-lib';
+import { createDashboardLink } from '@openmrs/esm-patient-common-lib';
 import rejectedTabComponent from './lab-tabs/rejected-tab.component';
 
-const moduleName = '@ugandaemr/esm-laboratory-app';
+const moduleName = '@epcare/esm-referal-laboratory-app';
 
 const options = {
-  featureName: 'ugandaemr-esm-laboratory',
+  featureName: 'esm-referal-laboratory-app',
   moduleName,
 };
 
@@ -91,9 +91,4 @@ export const rejectedTileComponent = getSyncLifecycle(rejectedTile, options);
 
 export function startupApp() {
   defineConfigSchema(moduleName, configSchema);
-  registerWorkspace({
-    name: 'patient-laboratory-referral-workspace',
-    title: 'Laboratory Referral Form',
-    load: getSyncLifecycle(laboratoryReferralWorkspaceComponent, options),
-  });
 }

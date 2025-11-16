@@ -2,8 +2,8 @@ const path = require("path");
 const config = (module.exports = require("openmrs/default-webpack-config"));
 config.scriptRuleConfig.exclude =
   path.sep == "/"
-    ? /(node_modules[^\/@openmrs\/esm\-patient\-common\-lib, ^\/@ohri\/openmrs\-esm\-ohri\-commons\-lib])/
-    : /(node_modules[^\\@openmrs\/esm\-patient\-common\-lib, ^\\@ohri\/openmrs\-esm\-ohri\-commons\-lib])/;
+    ? /(node_modules[^\/@openmrs\/esm\-patient\-common\-lib])/
+    : /(node_modules[^\\@openmrs\/esm\-patient\-common\-lib])/;
 config.overrides.resolve = {
   fallback: {
     crypto: false,
@@ -21,8 +21,6 @@ config.overrides.resolve = {
     "@openmrs/esm-framework": "@openmrs/esm-framework/src/internal",
     "@openmrs/openmrs-form-engine-lib":
       "@openmrs/openmrs-form-engine-lib/src/index",
-    "@ohri/openmrs-esm-ohri-commons-lib":
-      "@ohri/openmrs-esm-ohri-commons-lib/src/index",
   },
 };
 
