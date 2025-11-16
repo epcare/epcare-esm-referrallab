@@ -1,4 +1,4 @@
-# Laboratory ESM
+# Laboratory Referral ESM
 
 A frontend module for managing referral of laboratory requests
 

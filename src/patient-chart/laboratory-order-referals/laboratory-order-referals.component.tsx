@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './laboratory-order-referals.scss';
-import { formatDate, parseDate, ErrorState, showModal, useConfig } from '@openmrs/esm-framework';
+import { formatDate, parseDate, ErrorState, showModal, useConfig, launchWorkspace } from '@openmrs/esm-framework';
 
 import {
   DataTable,
@@ -34,7 +34,7 @@ import PrintResultsSummary from '../results-summary/print-results-summary.compon
 import { OrderTagStyle, useGetPatientByUuid } from '../../utils/functions';
 import { ResourceRepresentation, Result } from '../patient-laboratory-order-results.resource';
 import { useLaboratoryOrderResultsPages } from '../patient-laboratory-order-results-table.resource';
-import { CardHeader, launchPatientWorkspace } from '@openmrs/esm-patient-common-lib';
+import { CardHeader } from '@openmrs/esm-patient-common-lib';
 import { mutate } from 'swr';
 import { REFERINSTRUCTIONS } from '../../constants';
 
@@ -134,20 +134,15 @@ const LaboratoryOrderReferalResults: React.FC<LaboratoryOrderReferalResultsProps
   };
 
   const EditReferralAction: React.FC<EditReferralActionProps> = ({ formUuid, encounterUuid }) => {
-    const launchForm = () => {
-      launchPatientWorkspace('patient-laboratory-referral-workspace', {
-        workspaceTitle: 'Edit Referral Form',
-        mutateForm: () => {
-          mutate((key) => true, undefined, {
-            revalidate: true,
-          });
-        },
+    const launchForm = useCallback(() => {
+      launchWorkspace('patient-form-entry-workspace', {
         formInfo: {
-          encounterUuid: encounterUuid,
           formUuid: formUuid,
+          encounterUuid: encounterUuid,
         },
+        workspaceTitle: 'Edit Referral Form',
       });
-    };
+    }, [encounterUuid, formUuid]);
 
     return <Button kind="ghost" size="sm" onClick={launchForm} renderIcon={(props) => <Edit size={16} {...props} />} />;
   };

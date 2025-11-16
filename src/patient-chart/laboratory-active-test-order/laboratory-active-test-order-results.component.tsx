@@ -1,7 +1,15 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './laboratory-active-test-order-results.scss';
-import { formatDate, parseDate, ErrorState, showModal, useConfig, usePagination } from '@openmrs/esm-framework';
+import {
+  formatDate,
+  parseDate,
+  ErrorState,
+  showModal,
+  useConfig,
+  usePagination,
+  launchWorkspace,
+} from '@openmrs/esm-framework';
 import { mutate } from 'swr';
 import {
   DataTable,
@@ -36,7 +44,7 @@ import PrintResultsSummary from '../results-summary/print-results-summary.compon
 import { OrderTagStyle, useGetPatientByUuid } from '../../utils/functions';
 import { ResourceRepresentation, Result } from '../patient-laboratory-order-results.resource';
 import { useLaboratoryOrderResultsPages } from '../patient-laboratory-order-results-table.resource';
-import { CardHeader, launchPatientWorkspace } from '@openmrs/esm-patient-common-lib';
+import { CardHeader } from '@openmrs/esm-patient-common-lib';
 
 interface LaboratoryActiveTestOrderResultsProps {
   patientUuid: string;
@@ -117,20 +125,14 @@ const LaboratoryActiveTestOrderResults: React.FC<LaboratoryActiveTestOrderResult
     );
   };
 
-  const launchLabRequestForm = () => {
-    launchPatientWorkspace('patient-laboratory-referral-workspace', {
-      workspaceTitle: 'Lab Request Form',
-      mutateForm: () => {
-        mutate((key) => true, undefined, {
-          revalidate: true,
-        });
-      },
+  const launchLabRequestForm = useCallback(() => {
+    launchWorkspace('patient-form-entry-workspace', {
       formInfo: {
-        encounterUuid: '',
         formUuid: 'c6f3b5ad-b7eb-44ad-b212-fb26456e155b',
       },
+      workspaceTitle: 'Lab Request Form',
     });
-  };
+  }, []);
 
   const PrintButtonAction: React.FC<PrintProps> = ({ encounter }) => {
     const { patient } = useGetPatientByUuid(encounter.patient.uuid);

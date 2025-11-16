@@ -241,7 +241,8 @@ export function useGetPatientByUuid(uuid: string) {
 
 export function OrderTagStyle(order: any) {
   switch (order?.action) {
-    case 'NEW' || 'REVISE':
+    case 'NEW':
+    case 'REVISE':
       return {
         background: '#6F6F6F',
         color: 'white',
@@ -253,7 +254,8 @@ export function OrderTagStyle(order: any) {
         color: 'white',
       };
 
-    case 'DECLINED' || 'EXCEPTION':
+    case 'DECLINED':
+    case 'EXCEPTION':
       return {
         background: 'red',
         color: 'white',

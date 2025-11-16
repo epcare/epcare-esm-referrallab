@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Button, Select, SelectItem, Checkbox, TextInput, ButtonSet, FormGroup, InlineLoading } from '@carbon/react';
 import { useTranslation } from 'react-i18next';
 import styles from './add-to-worklist-dialog.scss';
@@ -37,12 +37,15 @@ const AddToWorklistDialog: React.FC<AddToWorklistDialogProps> = ({ closeWorkspac
   const [externalReferralName, setExternalReferralName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const acronymMap: Record<string, string> = {
-    CPHL: 'Central Public Health Laboratory',
-    UVRI: 'Uganda Virus Research Institute',
-    HUB: 'HUB',
-    OTHER: 'Other Reference lab',
-  };
+  const acronymMap = useMemo(
+    () => ({
+      CPHL: 'Central Public Health Laboratory',
+      UVRI: 'Uganda Virus Research Institute',
+      HUB: 'HUB',
+      OTHER: 'Other Reference lab',
+    }),
+    [],
+  );
 
   const generateSpecimenIdSchema = z
     .object({
@@ -261,7 +264,7 @@ const AddToWorklistDialog: React.FC<AddToWorklistDialogProps> = ({ closeWorkspac
         setValue('referenceLab', '');
       }
     }
-  }, [isEdit, order, referrals, setValue]);
+  }, [isEdit, order, referrals, setValue, acronymMap]);
 
   return (
     <div className={styles.container}>
