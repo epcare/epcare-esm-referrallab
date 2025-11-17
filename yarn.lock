@@ -1567,9 +1567,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@epcare/esm-referal-laboratory-app@workspace:.":
+"@epcare/esm-referral-laboratory-app@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@epcare/esm-referal-laboratory-app@workspace:."
+  resolution: "@epcare/esm-referral-laboratory-app@workspace:."
   dependencies:
     "@carbon/react": "npm:^1.83.0"
     "@hookform/resolvers": "npm:^5.0.1"

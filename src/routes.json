@@ -7,41 +7,41 @@
     "pages": [
         {
             "component": "root",
-            "route": "referal-laboratory"
+            "route": "referral-laboratory"
         }
     ],
     "extensions": [
         {
-            "name": "referal-laboratory-dashboard",
-            "slot": "referal-laboratory-dashboard-slot",
+            "name": "referral-laboratory-dashboard",
+            "slot": "referral-laboratory-dashboard-slot",
             "component": "root"
         },
         {
-            "name": "referal-laboratory-dashboard-link",
+            "name": "referral-laboratory-dashboard-link",
             "slot": "homepage-dashboard-slot",
             "component": "referalLaboratoryDashboardLink",
             "meta": {
-                "name": "referal-laboratory",
-                "slot": "referal-laboratory-dashboard-slot",
+                "name": "referral-laboratory",
+                "slot": "referral-laboratory-dashboard-slot",
                 "title": "Lab Referral"
             }
         },
         {
-            "name": "referal-laboratory-patient-chart-link",
+            "name": "referral-laboratory-patient-chart-link",
             "slot": "patient-chart-dashboard-slot",
             "component": "laboratoryOrderDashboardLink",
             "order": 13,
             "meta": {
-                "path": "referal-laboratory-orders",
-                "slot": "referal-laboratory-orders-dashboard-slot",
+                "path": "referral-laboratory-orders",
+                "slot": "referral-laboratory-orders-dashboard-slot",
                 "title": "Lab Referral",
                 "columns": 1,
                 "layoutMode": "anchored"
             }
         },
         {
-            "name": "referal-laboratory-orders-summary",
-            "slot": "referal-laboratory-orders-dashboard-slot",
+            "name": "referral-laboratory-orders-summary",
+            "slot": "referral-laboratory-orders-dashboard-slot",
             "component": "referalLaboratoryOrderComponent"
         },
         {

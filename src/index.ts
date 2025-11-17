@@ -24,10 +24,10 @@ import rejectedTile from './lab-tiles/rejected-tile.component';
 import { createDashboardLink } from '@openmrs/esm-patient-common-lib';
 import rejectedTabComponent from './lab-tabs/rejected-tab.component';
 
-const moduleName = '@epcare/esm-referal-laboratory-app';
+const moduleName = '@epcare/esm-referral-laboratory-app';
 
 const options = {
-  featureName: 'esm-referal-laboratory-app',
+  featureName: 'esm-referral-laboratory-app',
   moduleName,
 };
 
@@ -37,9 +37,9 @@ export const root = getSyncLifecycle(rootComponent, options);
 
 export const referalLaboratoryDashboardLink = getSyncLifecycle(
   createHomeDashboardLink({
-    name: 'laboratory',
+    name: 'referral-laboratory',
     slot: 'laboratory-dashboard-slot',
-    title: 'Laboratory',
+    title: 'Referral Laboratory',
   }),
   options,
 );
