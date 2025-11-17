@@ -19,7 +19,7 @@ import {
 import { OverflowMenuVertical } from '@carbon/react/icons';
 
 import { useTranslation } from 'react-i18next';
-import { ExtensionSlot, formatDate, parseDate, usePagination } from '@openmrs/esm-framework';
+import { ExtensionSlot, formatDate, parseDate, usePagination, useConfig } from '@openmrs/esm-framework';
 import styles from './laboratory-queue.scss';
 import { useGetOrdersWorklist } from '../work-list/work-list.resource';
 import OrderCustomOverflowMenuComponent from '../ui-components/overflow-menu.component';
@@ -29,23 +29,61 @@ interface LaboratoryPatientListProps {}
 
 const TestsOrderedList: React.FC<LaboratoryPatientListProps> = () => {
   const { t } = useTranslation();
-
   const { currentOrdersDate } = useOrderDate();
-
   const { data: pickedOrderList, isLoading } = useGetOrdersWorklist('', currentOrdersDate);
 
-  const data = pickedOrderList.filter(
-    (item) => item?.action === 'NEW' && item?.dateStopped === null && item?.fulfillerStatus === null,
-  );
+  // ---- NEW: load and parse testReferralValidators config ----
+  const config = useConfig() as any;
+
+  const { validatableTest = [] } = useMemo(() => {
+    const raw = config?.testReferralValidators;
+
+    if (!raw) {
+      return { validatableTest: [] };
+    }
+
+    // In your config, _type is String and _default is a JSON string,
+    // so at runtime this is usually a string.
+    if (typeof raw === 'string') {
+      try {
+        return JSON.parse(raw);
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error('Failed to parse testReferralValidators config', e);
+        return { validatableTest: [] };
+      }
+    }
+
+    // If for some reason it’s already an object with validatableTest
+    if (typeof raw === 'object' && raw !== null && 'validatableTest' in raw) {
+      return raw as { validatableTest: string[] };
+    }
+
+    return { validatableTest: [] };
+  }, [config?.testReferralValidators]);
+  // ---- END NEW ----
+
+  // Filter to only NEW, active orders for validatable tests
+  const data = useMemo(() => {
+    if (!pickedOrderList) return [];
+
+    return pickedOrderList.filter(
+      (item) =>
+        item?.action === 'NEW' &&
+        item?.dateStopped === null &&
+        item?.fulfillerStatus === null &&
+        item?.concept?.uuid &&
+        validatableTest.includes(item.concept.uuid),
+    );
+  }, [pickedOrderList, validatableTest]);
 
   const pageSizes = [10, 20, 30, 40, 50];
   const [currentPageSize, setPageSize] = useState(10);
 
   const { goTo, results: paginatedPickedOrderQueueEntries, currentPage } = usePagination(data, currentPageSize);
-  // get picked orders
+
   let columns = [
     { id: 0, header: t('date', 'Date'), key: 'date' },
-
     { id: 1, header: t('orderNumber', 'Order Number'), key: 'orderNumber' },
     { id: 2, header: t('patient', 'Patient'), key: 'patient' },
     { id: 3, header: t('artNumber', 'Art Number'), key: 'artNumber' },
@@ -166,6 +204,8 @@ const TestsOrderedList: React.FC<LaboratoryPatientListProps> = () => {
       </DataTable>
     );
   }
+
+  return null;
 };
 
 export default TestsOrderedList;

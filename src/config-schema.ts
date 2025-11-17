@@ -47,6 +47,13 @@ export const configSchema = {
     _default: false,
     _description: 'Configuration to enable/disable auto speciment id generation button.',
   },
+  testReferralValidators: {
+    _type: Type.String,
+    _default:
+      '{"validatableTest":["1eb05918-f50c-4cad-a827-3c78f296a10a","163610AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","dc8d4af2-30ab-102d-86b0-7a5022ba4115"],"testValidators":{"1eb05918-f50c-4cad-a827-3c78f296a10a":"413946009,385354005,202501002,LL5723-3,202501009,202501016,202501020,33882-2,202501021","163610AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA":"413946009,385354005,202501002,LL5723-3,202501009,202501016,202501020,33882-2,202501021","dc8d4af2-30ab-102d-86b0-7a5022ba4115":""}}',
+    _description: 'globalproperty that has allowable referral tests ',
+    _globalProperty: 'ugandaemrsync.testRefferalValidators',
+  },
 };
 
 export type Config = {
