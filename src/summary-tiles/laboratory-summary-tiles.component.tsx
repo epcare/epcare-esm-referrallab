@@ -7,7 +7,7 @@ import { ComponentContext } from '@openmrs/esm-framework/src/internal';
 const LaboratorySummaryTiles: React.FC = () => {
   const { t } = useTranslation();
 
-  const labTileSlot = 'lab-tiles-slot';
+  const labTileSlot = 'referral-lab-tiles-slot';
 
   const tilesExtensions = useConnectedExtensions(labTileSlot) as AssignedExtension[];
 

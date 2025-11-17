@@ -56,33 +56,6 @@
             "component": "rejectOrderDialog"
         },
         {
-            "name": "worklist-panel-component",
-            "slot": "lab-panels-slot",
-            "component": "worklistComponent",
-            "meta": {
-                "name": "worklistPanelSlot",
-                "title": "Worklist"
-            }
-        },
-        {
-            "name": "review-panel-component",
-            "slot": "lab-panels-slot",
-            "component": "reviewComponent",
-            "meta": {
-                "name": "reviewPanelSlot",
-                "title": "Review"
-            }
-        },
-        {
-            "name": "approved-panel-component",
-            "slot": "lab-panels-slot",
-            "component": "approvedComponent",
-            "meta": {
-                "name": "approvedPanelSlot",
-                "title": "Approved"
-            }
-        },
-        {
           "name": "rejected-panel-component",
           "slot": "lab-panels-slot",
           "component": "rejectedComponent",
@@ -93,7 +66,7 @@
         },
         {
             "name": "tests-ordered-tile-component",
-            "slot": "lab-tiles-slot",
+            "slot": "referral-lab-tiles-slot",
             "component": "testOrderedTileComponent",
             "meta": {
                 "name": "testsOrderedTileSlot",
@@ -109,27 +82,9 @@
                 "title": "Referred Tests"
             }
         },
-      {
-        "name": "worklist-tile-component",
-        "slot": "lab-tiles-slot",
-        "component": "worklistTileComponent",
-        "meta": {
-          "name": "worklisTileSlot",
-          "title": "Worklist"
-        }
-      },
-        {
-            "name": "completed-tile-component",
-            "slot": "lab-tiles-slot",
-            "component": "completedTileComponent",
-            "meta": {
-                "name": "completedTileSlot",
-                "title": "Completed"
-            }
-        },
         {
           "name": "rejected-tile-component",
-          "slot": "lab-tiles-slot",
+          "slot": "referral-lab-tiles-slot",
           "component": "rejectedTileComponent",
           "meta": {
             "name": "rejectedTileSlot",
@@ -138,7 +93,7 @@
         },
         {
             "name": "referred-tile-component",
-            "slot": "lab-tiles-slot",
+            "slot": "referral-lab-tiles-slot",
             "component": "referredTileComponent",
             "meta": {
                 "name": "referredTileSlot",

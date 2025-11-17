@@ -4,7 +4,7 @@ import Laboratory from './laboratory.component';
 
 const Root: React.FC = () => {
   return (
-    <BrowserRouter basename={`${window.spaBase}/home/laboratory`}>
+    <BrowserRouter basename={`${window.spaBase}/home/referral-laboratory`}>
       <Routes>
         <Route path="/" element={<Laboratory />} />
       </Routes>
