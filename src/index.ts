@@ -35,10 +35,10 @@ export const importTranslation = require.context('../translations', false, /.jso
 
 export const root = getSyncLifecycle(rootComponent, options);
 
-export const referalLaboratoryDashboardLink = getSyncLifecycle(
+export const referralLaboratoryDashboardLink = getSyncLifecycle(
   createHomeDashboardLink({
     name: 'referral-laboratory',
-    slot: 'laboratory-dashboard-slot',
+    slot: 'referral-laboratory-dashboard-slot',
     title: 'Referral Laboratory',
   }),
   options,
@@ -46,16 +46,7 @@ export const referalLaboratoryDashboardLink = getSyncLifecycle(
 
 export const laboratoryComponent = getSyncLifecycle(laboratory, options);
 
-// Patient chart
-export const laboratoryOrderDashboardLink = getSyncLifecycle(
-  createDashboardLink({
-    path: 'laboratory-orders',
-    title: 'Investigative Results',
-    moduleName,
-  }),
-  options,
-);
-export const referalLaboratoryOrderComponent = getSyncLifecycle(laboratoryOrder, options);
+export const referralLaboratoryOrderComponent = getSyncLifecycle(laboratoryOrder, options);
 
 export const pickOrderFormWorkspace = getSyncLifecycle(addToWorklist, options);
 

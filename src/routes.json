@@ -19,7 +19,7 @@
         {
             "name": "referral-laboratory-dashboard-link",
             "slot": "homepage-dashboard-slot",
-            "component": "referalLaboratoryDashboardLink",
+            "component": "referralLaboratoryDashboardLink",
             "meta": {
                 "name": "referral-laboratory",
                 "slot": "referral-laboratory-dashboard-slot",
@@ -27,22 +27,9 @@
             }
         },
         {
-            "name": "referral-laboratory-patient-chart-link",
-            "slot": "patient-chart-dashboard-slot",
-            "component": "laboratoryOrderDashboardLink",
-            "order": 13,
-            "meta": {
-                "path": "referral-laboratory-orders",
-                "slot": "referral-laboratory-orders-dashboard-slot",
-                "title": "Lab Referral",
-                "columns": 1,
-                "layoutMode": "anchored"
-            }
-        },
-        {
             "name": "referral-laboratory-orders-summary",
             "slot": "referral-laboratory-orders-dashboard-slot",
-            "component": "referalLaboratoryOrderComponent"
+            "component": "referralLaboratoryOrderComponent"
         },
         {
             "name": "add-to-worklist-dialog",
