@@ -13,7 +13,7 @@ import approvedTabComponent from './lab-tabs/approved-tab.component';
 import referredTestTabComponent from './lab-tabs/referred-tab.component';
 import worklistTabComponent from './lab-tabs/work-list-tab.component';
 import reveiwTabComponent from './lab-tabs/review-tab.component';
-import pickLabRequestButtonComponent from './tests-ordered/pick-lab-request-menu.component';
+import pickLabRequestButtonComponent from './tests-ordered/pick-referral-lab-request-menu.component';
 import rejectOrderButtonComponent from './order-actions/reject-order.component';
 import worklistTile from './lab-tiles/worklist-tile.component';
 import referredTile from './lab-tiles/referred-tile.component';
@@ -48,7 +48,7 @@ export const laboratoryComponent = getSyncLifecycle(laboratory, options);
 
 export const referralLaboratoryOrderComponent = getSyncLifecycle(laboratoryOrder, options);
 
-export const pickOrderFormWorkspace = getSyncLifecycle(addToWorklist, options);
+export const pickReferralOrderFormWorkspace = getSyncLifecycle(addToWorklist, options);
 
 export const sendEmailDialog = getSyncLifecycle(sendEmail, options);
 
@@ -66,7 +66,7 @@ export const referredTestComponent = getSyncLifecycle(referredTestTabComponent, 
 
 export const worklistComponent = getSyncLifecycle(worklistTabComponent, options);
 
-export const pickLabRequestButton = getSyncLifecycle(pickLabRequestButtonComponent, options);
+export const pickReferralLabRequestButton = getSyncLifecycle(pickLabRequestButtonComponent, options);
 
 export const rejectOrderButton = getSyncLifecycle(rejectOrderButtonComponent, options);
 

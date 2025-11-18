@@ -89,7 +89,7 @@ const ReferredOrdersList: React.FC = () => {
 
   const EditOrder: React.FC<EditOrderProps> = ({ order }) => {
     const handleLaunchWorkspace = useCallback(() => {
-      launchWorkspace('pick-order-form-workspace', {
+      launchWorkspace('pick-referral-order-form-workspace', {
         order,
         isEdit: true,
       });

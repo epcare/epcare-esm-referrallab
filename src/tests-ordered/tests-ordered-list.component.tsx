@@ -119,7 +119,7 @@ const TestsOrderedList: React.FC<LaboratoryPatientListProps> = () => {
             <ExtensionSlot
               className={styles.menuLink}
               state={{ order: paginatedPickedOrderQueueEntries[index] }}
-              name="order-actions-slot"
+              name="referral-order-actions-slot"
             />
           </OrderCustomOverflowMenuComponent>
         ),

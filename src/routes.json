@@ -101,20 +101,20 @@
             }
         },
         {
-            "name": "pick-lab-request-button",
-            "component": "pickLabRequestButton",
-            "slot": "order-actions-slot"
+            "name": "pick-referral-lab-request-button",
+            "component": "pickReferralLabRequestButton",
+            "slot": "referral-order-actions-slot"
         },
         {
             "name": "reject-order-button",
             "component": "rejectOrderButton",
-            "slot": "order-actions-slot"
+            "slot": "referral-order-actions-slot"
         }
     ],
     "workspaces": [
         {
-            "name": "pick-order-form-workspace",
-            "component": "pickOrderFormWorkspace",
+            "name": "pick-referral-order-form-workspace",
+            "component": "pickReferralOrderFormWorkspace",
             "title": "Pick Lab Request",
             "type": "form",
             "canMaximize": true,

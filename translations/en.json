@@ -14,6 +14,6 @@
   "waitingTime": "Waiting time",
   "worklist": "Worklist",
   "rejectOrder": "Reject Order",
-  "pickLabRequest": "Pick Lab Request",
+  "pickReferralLabRequest": "Pick Lab Request",
   "filterOrdersByStatus": "Filter Orders by status"
 }

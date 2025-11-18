@@ -4,22 +4,22 @@ import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Order } from '../types/patient-queues';
 
-interface PickLabRequestActionMenuProps {
+interface PickReferralLabRequestActionMenuProps {
   order: Order;
 }
 
-const PickLabRequestActionMenu: React.FC<PickLabRequestActionMenuProps> = ({ order }) => {
+const PickReferralLabRequestActionMenu: React.FC<PickReferralLabRequestActionMenuProps> = ({ order }) => {
   const { t } = useTranslation();
 
   const handleLaunchWorkspace = useCallback(() => {
-    launchWorkspace('pick-order-form-workspace', {
+    launchWorkspace('pick-referral-order-form-workspace', {
       order,
     });
   }, [order]);
 
   return (
     <OverflowMenuItem
-      itemText={t('pickLabRequest', 'Pick Lab Request')}
+      itemText={t('pickReferralLabRequest', 'Pick Lab Request')}
       onClick={handleLaunchWorkspace}
       style={{
         maxWidth: '100vw',
@@ -28,4 +28,4 @@ const PickLabRequestActionMenu: React.FC<PickLabRequestActionMenuProps> = ({ ord
   );
 };
 
-export default PickLabRequestActionMenu;
+export default PickReferralLabRequestActionMenu;
